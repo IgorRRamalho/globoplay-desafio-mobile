@@ -10,8 +10,8 @@
 Obrigado por participar do desafio do Globoplay! Estamos muito contentes pelo seu primeiro passo para fazer parte de um time excepcional. Você deverá criar um aplicativo sobre filmes, usando a [API](https://developers.themoviedb.org/3/getting-started/introduction) do [TheMovieDB](https://www.themoviedb.org/?language=en).
 Para termos um layout minimamente definido, anexamos alguns assets que vão te ajudar a desenvolver esse app:
 
-- [ScreenShots](assets/screenshots)
-- [Ícones](assets/icons)
+- [ScreenShots](globoplay_flutter/assets/screenshots)
+- [Ícones](globoplay_flutter/assets/icons)
 
 Pense no desafio como uma oportunidade de mostrar todo o seu conhecimento. E faça com calma, você tem uma semana para entregar! Sua avaliação será baseada nos seguintes tópicos:
 
@@ -64,12 +64,12 @@ Sabemos que testes não é um tópico que todos dominam ou tem conhecimento, por
 Nossos designers elaboraram algumas sugestões de telas e fluxos para guiar você durante o desenvolvimento, portanto fique à vontade para modificar como você quiser.
 Para facilitar o processo, existem assets, app icons, ícones e paleta de cores no repositório. Mas se o seu lado designer falar mais alto, pode nos surpreender!
 
-- [Splash](assets/screenshots/splash.png)
-- [Grid de filmes](assets/screenshots/home.jpg)
-- [Detalhes](assets/screenshots/highlights-details.jpg)
-- [Assista Também](assets/screenshots/highlights.jpg)
-- [Adicionar aos favoritos](assets/screenshots/highlights-favorited.jpg)
-- [Lista de Favoritos](assets/screenshots/my-list.jpg)
+- [Splash](globoplay_flutter/assets/screenshots/splash.png)
+- [Grid de filmes](globoplay_flutter/assets/screenshots/home.jpg)
+- [Detalhes](globoplay_flutter/assets/screenshots/highlights-details.jpg)
+- [Assista Também](globoplay_flutter/assets/screenshots/highlights.jpg)
+- [Adicionar aos favoritos](globoplay_flutter/assets/screenshots/highlights-favorited.jpg)
+- [Lista de Favoritos](globoplay_flutter/assets/screenshots/my-list.jpg)
 
 
 ## **Processo de entrega**

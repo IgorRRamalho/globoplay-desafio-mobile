@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "940799567264",
+    "project_id": "globoplay-flutter",
+    "storage_bucket": "globoplay-flutter.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:940799567264:android:97703303bc369fe254b0c5",
+        "android_client_info": {
+          "package_name": "com.globoplay"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDgMcVAxAhoKuqxC2j3ft9IeD_1pHldAqE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

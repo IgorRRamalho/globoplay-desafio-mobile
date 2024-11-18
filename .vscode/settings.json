@@ -1,0 +1,6 @@
+{
+    "window.title": "${dirty}${activeEditorShort}${separator}${rootName}${separator}${profileName}${separator}${appName}${separator}[Branch: master]",
+    "workbench.editorAssociations": {
+          "*.svg": "svgPreview.previewEditor"
+        }
+}
