@@ -3,6 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:globoplay_flutter/shared/models/movie_model.dart';
 import '../../shared/repositories/movie_repository.dart';
+import '../../features/my_list/my_list_page.dart';
+
+final currentIndexProvider = StateProvider<int>((ref) => 0);
 
 final moviesProvider =
     FutureProvider.autoDispose<Map<String, List<Movie>>>((ref) async {
@@ -15,6 +18,8 @@ class HomePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final currentIndex = ref.watch(currentIndexProvider);
+
     final moviesAsyncValue = ref.watch(moviesProvider);
 
     return Scaffold(
@@ -28,7 +33,8 @@ class HomePage extends ConsumerWidget {
         centerTitle: true,
         elevation: 0,
       ),
-      body: moviesAsyncValue.when(
+      body: currentIndex == 0 
+      ? moviesAsyncValue.when(
         data: (categories) {
           return Container(
             color: const Color(0xFF1F1F1F),
@@ -46,12 +52,18 @@ class HomePage extends ConsumerWidget {
           child:
               Text('Erro: $error', style: const TextStyle(color: Colors.white)),
         ),
-      ),
+      )
+      : 
+      const MyListPage(),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.black,
         selectedItemColor: Colors.white,
         unselectedItemColor: Colors.grey,
+        currentIndex: currentIndex,
         type: BottomNavigationBarType.fixed,
+        onTap: (index) {
+          ref.read(currentIndexProvider.notifier).state = index;
+        },
         items: [
           BottomNavigationBarItem(
             icon: SvgPicture.asset(
@@ -80,72 +92,6 @@ class HomePage extends ConsumerWidget {
       ),
     );
   }
-}
-
-@override
-Widget build(BuildContext context, WidgetRef ref) {
-  final moviesAsyncValue = ref.watch(moviesProvider);
-
-  return Scaffold(
-    backgroundColor: Colors.black,
-    appBar: AppBar(
-      backgroundColor: Colors.black,
-      title: Image.asset(
-        'assets/geral/globoplay-logo-branca.png',
-        height: 30,
-      ),
-      centerTitle: true,
-      elevation: 0,
-    ),
-    body: moviesAsyncValue.when(
-      data: (categories) {
-        return Container(
-          color: const Color(0xFF1F1F1F),
-          child: ListView(
-            children: categories.entries.map((entry) {
-              final category = entry.key;
-              final movies = entry.value;
-              return _CategorySection(category: category, movies: movies);
-            }).toList(),
-          ),
-        );
-      },
-      loading: () => const Center(child: CircularProgressIndicator()),
-      error: (error, stackTrace) => Center(
-        child:
-            Text('Erro: $error', style: const TextStyle(color: Colors.white)),
-      ),
-    ),
-    bottomNavigationBar: BottomNavigationBar(
-      backgroundColor: Colors.black,
-      selectedItemColor: Colors.white,
-      unselectedItemColor: Colors.grey,
-      type: BottomNavigationBarType.fixed,
-      items: [
-        BottomNavigationBarItem(
-          icon: SvgPicture.asset(
-            'assets/icons/home/home.svg',
-            width: 24,
-            height: 24,
-            colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
-          ),
-          label: 'Início',
-        ),
-        BottomNavigationBarItem(
-          icon: SvgPicture.asset(
-            'assets/icons/star/star.svg',
-            width: 24,
-            height: 24,
-            colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
-          ),
-          label: 'Minha lista',
-        ),
-      ],
-      selectedLabelStyle: const TextStyle(fontSize: 12),
-      unselectedLabelStyle: const TextStyle(fontSize: 12),
-      showUnselectedLabels: true,
-    ),
-  );
 }
 
 class _CategorySection extends StatelessWidget {
@@ -200,14 +146,6 @@ class _CategorySection extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 4),
-                      Text(
-                        movie.title,
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 14,
-                        ),
-                        overflow: TextOverflow.ellipsis,
-                      ),
                     ],
                   ),
                 ),

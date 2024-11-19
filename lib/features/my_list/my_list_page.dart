@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'my_list_controller.dart';
+import 'package:globoplay_flutter/shared/controller/my_list_controller.dart';
 
 class MyListPage extends ConsumerWidget {
   const MyListPage({super.key});
@@ -11,25 +11,60 @@ class MyListPage extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('My List'),
+        backgroundColor: Colors.black,
+        title: const Text(
+          'Minha lista',
+          style: TextStyle(color: Colors.white),
+        ),
+        centerTitle: true,
+        elevation: 0,
       ),
+      backgroundColor: const Color(0xFF1F1F1F),
       body: myList.isEmpty
-          ? const Center(child: Text('No movies in your list.'))
-          : ListView.builder(
-              itemCount: myList.length,
-              itemBuilder: (context, index) {
-                final movie = myList[index];
-                return ListTile(
-                  title: Text(movie.title),
-                  subtitle: Text(movie.releaseDate),
-                  trailing: IconButton(
-                    icon: const Icon(Icons.delete),
-                    onPressed: () {
-                      ref.read(myListProvider.notifier).removeMovie(movie);
+          ? const Center(
+              child: Text(
+                'Sua lista de filmes está vazia.',
+                style: TextStyle(color: Colors.white),
+              ),
+            )
+          : Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: GridView.builder(
+                itemCount: myList.length,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3,
+                  crossAxisSpacing: 8,
+                  mainAxisSpacing: 8, 
+                  childAspectRatio: 0.66,
+                ),
+                itemBuilder: (context, index) {
+                  final movie = myList[index];
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(
+                        context,
+                        '/movie-info',
+                        arguments: movie,
+                      );
                     },
-                  ),
-                );
-              },
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(8),
+                          child: Image.network(
+                            movie.posterUrl,
+                            height: 150,
+                            width: 100,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                      ],
+                    ),
+                  );
+                },
+              ),
             ),
     );
   }
