@@ -19,42 +19,43 @@ class HomePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final currentIndex = ref.watch(currentIndexProvider);
-
     final moviesAsyncValue = ref.watch(moviesProvider);
 
     return Scaffold(
       backgroundColor: Colors.black,
-      appBar: AppBar(
-        backgroundColor: Colors.black,
-        title: Image.asset(
-          'assets/geral/globoplay-logo-branca.png',
-          height: 30,
-        ),
-        centerTitle: true,
-        elevation: 0,
-      ),
-      body: currentIndex == 0 
-      ? moviesAsyncValue.when(
-        data: (categories) {
-          return Container(
-            color: const Color(0xFF1F1F1F),
-            child: ListView(
-              children: categories.entries.map((entry) {
-                final category = entry.key;
-                final movies = entry.value;
-                return _CategorySection(category: category, movies: movies);
-              }).toList(),
-            ),
-          );
-        },
-        loading: () => const Center(child: CircularProgressIndicator()),
-        error: (error, stackTrace) => Center(
-          child:
-              Text('Erro: $error', style: const TextStyle(color: Colors.white)),
-        ),
-      )
-      : 
-      const MyListPage(),
+      appBar: currentIndex == 0
+          ? AppBar(
+              backgroundColor: Colors.black,
+              title: Image.asset(
+                'assets/geral/globoplay-logo-branca.png',
+                height: 30,
+              ),
+              centerTitle: true,
+              elevation: 0,
+            )
+          : null,
+      body: currentIndex == 0
+          ? moviesAsyncValue.when(
+              data: (categories) {
+                return Container(
+                  color: const Color(0xFF1F1F1F),
+                  child: ListView(
+                    children: categories.entries.map((entry) {
+                      final category = entry.key;
+                      final movies = entry.value;
+                      return _CategorySection(
+                          category: category, movies: movies);
+                    }).toList(),
+                  ),
+                );
+              },
+              loading: () => const Center(child: CircularProgressIndicator()),
+              error: (error, stackTrace) => Center(
+                child: Text('Erro: $error',
+                    style: const TextStyle(color: Colors.white)),
+              ),
+            )
+          : const MyListPage(),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.black,
         selectedItemColor: Colors.white,
